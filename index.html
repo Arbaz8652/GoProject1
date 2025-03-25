@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Private Chat</title>
+</head>
+<body>
+    <h2>Private Chat</h2>
+    <label>Username:</label>
+    <input type="text" id="username">
+    <button onclick="connect()">Connect</button>
+    <br><br>
+    
+    <label>To:</label>
+    <input type="text" id="receiver">
+    <label>Message:</label>
+    <input type="text" id="message">
+    <button onclick="sendMessage()">Send</button>
+
+    <div id="chat"></div>
+
+    <script>
+        let socket;
+        let chat = document.getElementById("chat");
+
+        function connect() {
+            let username = document.getElementById("username").value;
+            socket = new WebSocket("http://192.168.0.108:8080/ws?username=" + username);
+
+            socket.onmessage = function(event) {
+                chat.innerHTML += "<p>" + event.data + "</p>";
+            };
+        }
+
+        function sendMessage() {
+            let sender = document.getElementById("username").value;
+            let receiver = document.getElementById("receiver").value;
+            let message = document.getElementById("message").value;
+            chat.innerHTML += "<p>" + message + "</p>";
+
+            fetch(`http://192.168.0.108:8080/send?sender=${sender}&receiver=${receiver}&message=${message}`)
+                .then(response => response.text())
+                .then(data => console.log(data));
+        }
+    </script>
+</body>
+</html>

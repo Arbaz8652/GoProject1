@@ -24,7 +24,7 @@
 
         function connect() {
             let username = document.getElementById("username").value;
-            socket = new WebSocket("http://192.168.0.108:8080/ws?username=" + username);
+            socket = new WebSocket("http://localhost/ws?username=" + username);
 
             socket.onmessage = function(event) {
                 chat.innerHTML += "<p>" + event.data + "</p>";

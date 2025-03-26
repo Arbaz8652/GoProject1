@@ -37,7 +37,7 @@
             let message = document.getElementById("message").value;
             chat.innerHTML += "<p>" + message + "</p>";
 
-            fetch(`http://192.168.0.108:8080/send?sender=${sender}&receiver=${receiver}&message=${message}`)
+            fetch(`http://localhost:8080/send?sender=${sender}&receiver=${receiver}&message=${message}`)
                 .then(response => response.text())
                 .then(data => console.log(data));
         }
